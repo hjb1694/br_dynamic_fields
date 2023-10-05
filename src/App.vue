@@ -8,6 +8,7 @@
     </ul>
   </div>
   <form v-else class="form" @submit.prevent>
+    <h1>The Dynamic Form</h1>
     <div v-for="field in fields" class="form-grp">
       <component
       :is="field.type"
@@ -16,7 +17,7 @@
       v-model="field.value"
       ></component>
     </div>
-    <button @click="processsubmit">Submit</button>
+    <button class="subbut" @click="processsubmit">Submit</button>
     <ul v-if="errors.length" class="errbox">
       <li v-for="error in errors">{{ error }}</li>
     </ul>
@@ -147,5 +148,17 @@
   .result-list {
     list-style-position: inside;
     font-size:1.4rem;
+  }
+
+  .subbut {
+    font-size:1.8rem;
+    border:none;
+    padding:1rem;
+    cursor:pointer;
+    background:#198dbb;
+    color:#fff;
+    display:inline-block;
+    border-radius:5px;
+    font-weight:bold;
   }
 </style>
