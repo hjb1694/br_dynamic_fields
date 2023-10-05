@@ -44,5 +44,6 @@ export default {
         width:100%;
         padding:5px;
         border-radius:5px;
+        font-size:1.8rem;
     }
 </style>

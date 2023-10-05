@@ -9,6 +9,9 @@
       ></component>
     </div>
     <button @click="processsubmit">Submit</button>
+    <ul v-if="errors.length" class="errbox">
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
   </form>
 </template>
 
@@ -31,14 +34,55 @@
     }, 
     data() {
       return {
-        fields: fields
+        fields: fields,
+        errors: []
       }
     }, 
     methods: {
-      processsubmit() {
+      validate(){
+        this.errors = [];
+
         for(let field of this.fields){
-          console.log(field.value);
+          if(field.type === 'textinput'){
+            for(let validation of field.validations){
+
+              if(
+                validation === 'notempty' &&
+                field.value.length < 1
+              ){
+                this.errors.push(`${field.label} must not be empty.`);
+              }
+              
+              if(validation.startsWith('minlength')){
+                const len = +validation.split(':')[1];
+                if(field.value.length < len){
+                  this.errors.push(`${field.label} must be at least ${len} characters.`);
+                }
+
+              }
+
+            }
+          }else if(field.type === 'phoneinput') {
+
+            if(!/\([0-9]{3}\) [0-9]{3}\-[0-9]{4}/.test(field.value)){
+              this.errors.push(`${field.label} is invalid.`);
+            }
+
+          }else if(field.type === 'selectinput') {
+
+            if(
+              field.validations.includes('notempty') &&
+              !field.value
+            ){
+                this.errors.push(`${field.label} is a required field.`);
+            }
+
+          }
         }
+
+      },
+      processsubmit() {
+        this.validate();
       }
     }
   }
@@ -51,5 +95,9 @@
     background:rgba(255,255,255,.8);
     padding:2rem;
     border-radius:5px;
+  }
+
+  .form-grp {
+    margin:2rem 0;
   }
 </style>

@@ -6,7 +6,7 @@
             type="checkbox" 
             :value="option" 
             @change="onCheck($event.target.value, $event.target.checked)"
-            /> {{ option }}
+            /> <span>{{ option }}</span>
         </label>
     </fieldset>
 </template>
@@ -40,3 +40,22 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    fieldset {
+        border:none;
+    }
+
+    legend {
+        font-size:1.6rem;
+    }
+
+    label {
+        display:flex;
+        font-size:1.4rem;
+
+        span {
+            margin-left:8px;
+        }
+    }
+</style>
