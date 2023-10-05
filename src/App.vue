@@ -1,5 +1,13 @@
 <template>
-  <form class="form" @submit.prevent>
+  <div class="results-pane" v-if="success">
+    <h1>Results</h1>
+    <ul class="result-list">
+      <li v-for="field in storeFields">
+        <strong>{{ field.label }}:</strong> {{ field.val }}
+      </li>
+    </ul>
+  </div>
+  <form v-else class="form" @submit.prevent>
     <div v-for="field in fields" class="form-grp">
       <component
       :is="field.type"
@@ -35,7 +43,8 @@
     data() {
       return {
         fields: fields,
-        errors: []
+        errors: [], 
+        success: false
       }
     }, 
     methods: {
@@ -77,19 +86,42 @@
                 this.errors.push(`${field.label} is a required field.`);
             }
 
+          }else if(field.type === 'checkboxgroup'){
+
+            if(
+              field.validations.includes('notempty') &&
+              !field.value
+            ){
+              this.errors.push(`Please select at least one value from ${field.label}.`);
+            }
+
           }
         }
 
       },
       processsubmit() {
         this.validate();
+        if(this.errors.length) return;
+        for(let field of this.fields){
+          this.$store.dispatch('addField', {
+            label: field.label, 
+            val: field.value
+          });
+        }
+        this.success = true;
+      }
+    }, 
+    computed: {
+      storeFields(){
+        return this.$store.getters.fields;
       }
     }
   }
 </script>
 
 <style lang="scss">
-  .form {
+  .form, 
+  .results-pane {
     width:80%;
     margin:2rem auto;
     background:rgba(255,255,255,.8);
@@ -99,5 +131,21 @@
 
   .form-grp {
     margin:2rem 0;
+  }
+
+  .errbox {
+    background: #ffeeee;
+    list-style-position: inside;
+    padding:1rem;
+    margin-top:2rem;
+    color:#f00;
+    border:2px solid #f00;
+    border-radius:5px;
+    font-size:1.4rem;
+  }
+
+  .result-list {
+    list-style-position: inside;
+    font-size:1.4rem;
   }
 </style>
