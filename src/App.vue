@@ -1,4 +1,5 @@
 <template>
+  <!-- Pane shown upon successful submission -->
   <div class="results-pane" v-if="success">
     <h1>Results</h1>
     <ul class="result-list">
@@ -7,9 +8,11 @@
       </li>
     </ul>
   </div>
+  <!-- The form shown on initial load -->
   <form v-else class="form" @submit.prevent>
     <h1>The Dynamic Form</h1>
     <div v-for="field in fields" class="form-grp">
+      <!-- This is a dynamic component below. A great feature of Vue ;) -->
       <component
       :is="field.type"
       :label="field.label"
@@ -18,6 +21,7 @@
       ></component>
     </div>
     <button class="subbut" @click="processsubmit">Submit</button>
+    <!-- Error box shown only if errors are present. -->
     <ul v-if="errors.length" class="errbox">
       <li v-for="error in errors">{{ error }}</li>
     </ul>
@@ -50,8 +54,13 @@
     }, 
     methods: {
       validate(){
+        // Reset errors upon each submission
         this.errors = [];
-
+        
+        /* 
+        Iterate through each field and check for the input type.
+        Specific validations are included for each input type.
+        */
         for(let field of this.fields){
           if(field.type === 'textinput'){
             for(let validation of field.validations){
@@ -100,6 +109,9 @@
         }
 
       },
+      /* 
+      This is fired once the submit button is clicked.
+      */
       processsubmit() {
         this.validate();
         if(this.errors.length) return;

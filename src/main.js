@@ -1,3 +1,4 @@
+// Importing some base/main styles and resets here.
 import './assets/main.scss'
 
 import { createApp } from 'vue'

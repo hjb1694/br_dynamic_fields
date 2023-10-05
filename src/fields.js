@@ -1,3 +1,16 @@
+/* 
+The types below are sensitive and must be written in a specific way to work.
+Possible values:
+-- textinput
+-- phoneinput
+-- selectinput
+-- textareainput
+-- checkboxgroup
+
+Options need to be provided in the form of an array of strings for 
+input types that may have multiple selection, such as selectinput and checkboxgroup
+*/
+
 export default [
     {
         id: 1,
