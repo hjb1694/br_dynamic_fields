@@ -1,21 +1,23 @@
 export default [
     {
         id: 1,
-        type: "text",
+        type: "textinput",
         label: "Full Name",
         validations: ["notempty", "minlength:3"],
-        config: {}
+        config: {}, 
+        value: ""
     }, 
     {
         id: 2,
-        type: "tel",
+        type: "telinput",
         label: "Phone",
         validations: [], 
-        config: {}
+        config: {}, 
+        value: ""
     }, 
     {
         id: 3, 
-        type: "select",
+        type: "selectinput",
         label: "Interests",
         validations: ['notempty'],
         config: {
@@ -24,13 +26,15 @@ export default [
                 'oceans', 
                 'deserts'
             ], 
-        }
+        }, 
+        value: ""
     }, 
     {
         id: 4,
-        type: "textarea",
+        type: "textareainput",
         label: "Description",
         validations: ["maxlength:500"], 
-        config: {}
+        config: {}, 
+        value: ""
     }
 ]
