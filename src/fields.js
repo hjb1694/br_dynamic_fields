@@ -34,7 +34,9 @@ export default [
         type: "textareainput",
         label: "Description",
         validations: ["maxlength:500"], 
-        config: {}, 
+        config: {
+            maxlength: 500
+        }, 
         value: ""
     }, 
     {

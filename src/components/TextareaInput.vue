@@ -6,8 +6,10 @@
         class="textarea-input__field" 
         rows="10"
         placeholder=" "
+        :maxlength="config.maxlength"
         ></textarea>
         <label class="textarea-input__label">{{ label }}</label>
+        <div class="length">{{ length }}/{{ config.maxlength }}</div>
     </div>
 </template>
 
@@ -20,11 +22,20 @@
             label: {
                 type: String, 
                 required: true
+            }, 
+            config: {
+                type: Object
             }
         }, 
         emits: ['update:modelValue'],
+        data(){
+            return {
+                length: 0
+            }
+        },
         methods: {
             onInput(value){
+                this.length = value.length;
                 this.$emit('update:modelValue', value);
             }
         }
@@ -68,5 +79,12 @@
             font-size:1.3rem;
             transform:translateY(-1rem);
         }
+    }
+
+    .length {
+        position:absolute;
+        bottom:4px;
+        right:4px;
+        font-size:1.3rem;
     }
 </style>
