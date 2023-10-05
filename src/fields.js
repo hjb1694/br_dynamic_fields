@@ -9,7 +9,7 @@ export default [
     }, 
     {
         id: 2,
-        type: "telinput",
+        type: "phoneinput",
         label: "Phone",
         validations: [], 
         config: {}, 
@@ -35,6 +35,20 @@ export default [
         label: "Description",
         validations: ["maxlength:500"], 
         config: {}, 
+        value: ""
+    }, 
+    {
+        id: 5, 
+        type: "checkboxgroup", 
+        label: "Travel", 
+        validations: ["notempty"], 
+        config: {
+            options: [
+                'Car', 
+                'Bus', 
+                'Train'
+            ]
+        }, 
         value: ""
     }
 ]
